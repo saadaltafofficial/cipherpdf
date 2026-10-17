@@ -1,51 +1,38 @@
 # CipherPDF
 
-Open-source, **local-first PDF tools** built with Vite, PDF.js, and pdf-lib. Alpha v0.1.
+Open-source privacy-first PDF workspace built with **Svelte 5, Vite, PDF.js and pdf-lib**.
 
-## Features (implemented)
-
-- Open multiple PDFs without uploading documents to a server
-- Preview the first page of the selected PDF
-- Merge PDFs in the order they were added
-- Extract arbitrary page ranges (`1-3,5`)
-- Rotate every page of a PDF 90° clockwise
-- Compute SHA-256 fingerprint of the original document bytes using Web Crypto
-
-## Getting started
-
-Requires Node.js 20.19+ or 22.12+.
+## Quick start
 
 ```bash
 npm install
 npm run dev
+npm run build
+npm run check
 ```
 
-Then open the local URL printed by Vite.
+## Implemented
 
-Build: `npm run build`.
+- Local PDF preview with paging
+- Merge PDFs in sidebar order
+- Extract page ranges, rotate pages
+- Add a text annotation at PDF coordinates
+- SHA-256 fingerprint of the original bytes
+- PDF export and download without server-side uploads
+- Responsive Svelte interface
 
-## Security notes
+## Security limitations
 
-- File operations execute client-side; the app does not send document contents to a backend.
-- The SHA-256 feature detects changes **only when compared against a previously trusted fingerprint**. It does **not** verify a PDF digital signature, establish authorship, or prove a document is safe.
-- Standard browser and supply-chain considerations still apply. For sensitive use, self-host and review dependencies.
-- Password-protected PDFs, arbitrary existing-text editing, PDF signatures, secure redaction, and encryption are **not implemented** yet.
-- Do not rely on this alpha version for legally binding signing or sensitive-document redaction.
+SHA-256 fingerprints do **not** authenticate document origin. Certificate validation, PAdES signatures, encryption, and irreversible redaction **are not implemented**. Inserting text does not edit existing PDF text. PDF processing happens locally, but the app is not security-audited. Don't use this release for sensitive document validation. Keep PDF dependencies patched.
 
-## Roadmap
+## Milestones
 
-- [ ] PDF signature verification (PAdES / certificate chain validation)
-- [ ] Certificate-backed signing, including incremental updates
-- [ ] PDF encryption and secure password handling
-- [ ] Comments, forms, and annotation editing
-- [ ] PDF redaction with content removal and validation
-- [ ] Rust WASM core and CLI; offline desktop distribution
-- [ ] Tests, fuzzing, security review and reproducible builds
+- [x] Svelte application and local PDF tools
+- [ ] Page thumbnails, page reordering and regression fixtures
+- [ ] Standards-compliant AES-256 PDF encryption/decryption
+- [ ] CMS/PAdES signatures and certificate-chain verification
+- [ ] Certificate-backed signing and incremental PDF saves
+- [ ] True irreversible redaction
+- [ ] Hardened releases, fuzz tests, accessibility and security review
 
-## License
-
-Apache-2.0. See [LICENSE](LICENSE).
-
-## Contributing
-
-Issues and pull requests are welcome. Please report security vulnerabilities privately to the maintainer rather than posting proof-of-concept exploits publicly.
+Apache-2.0 license.
